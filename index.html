@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re:Peat - Premium Flashcard Extension</title>
+    <meta name="description"
+        content="Re:Peat is a Chrome extension that helps students study more effectively with spaced repetition flashcards and premium features.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0px 10px;
+        }
+
+        .nav-bar {
+            max-width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured .cta-button {
+            background: white;
+            color: #667eea;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price .period {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured .plan-features li {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Screenshot Section */
+        .screenshots {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .screenshot-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .screenshot-placeholder {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin: 0 auto;
+            max-width: 800px;
+            font-size: 1.2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: white;
+            margin-bottom: 4rem;
+        }
+
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 2rem;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="nav-bar">
+            <div class="logo">
+                <!-- 🎯 Re:Peat -->
+                <img src="./small_logo.png" alt="repeat icon">
+                <svg width="81" height="16" viewBox="0 0 81 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M22.0607 16C20.864 16 19.8339 15.7571 18.9704 15.2712C18.112 14.7802 17.4506 14.0868 16.986 13.191C16.5215 12.2901 16.2892 11.2247 16.2892 9.99483C16.2892 8.79531 16.5215 7.74257 16.986 6.83661C17.4506 5.93064 18.1045 5.2246 18.9477 4.71847C19.796 4.21235 20.7907 3.95929 21.9319 3.95929C22.6994 3.95929 23.4139 4.08329 24.0753 4.33129C24.7419 4.57423 25.3225 4.94117 25.8174 5.43211C26.3173 5.92305 26.7061 6.54052 26.9838 7.28453C27.2615 8.02347 27.4004 8.88894 27.4004 9.88095V10.7692H17.5768V8.76494H24.3632C24.3632 8.29931 24.2622 7.88682 24.0602 7.52747C23.8582 7.16812 23.578 6.88722 23.2195 6.68477C22.866 6.47726 22.4545 6.3735 21.9849 6.3735C21.4951 6.3735 21.0609 6.48738 20.6822 6.71514C20.3085 6.93783 20.0157 7.23898 19.8036 7.61857C19.5915 7.9931 19.4829 8.41066 19.4779 8.87123V10.7768C19.4779 11.3538 19.5839 11.8523 19.796 12.2724C20.0131 12.6925 20.3186 13.0164 20.7125 13.2441C21.1063 13.4719 21.5734 13.5858 22.1137 13.5858C22.4722 13.5858 22.8004 13.5352 23.0983 13.4339C23.3962 13.3327 23.6512 13.1809 23.8633 12.9784C24.0753 12.776 24.2369 12.528 24.348 12.2344L27.3322 12.4318C27.1807 13.1505 26.8702 13.7781 26.4006 14.3146C25.936 14.846 25.3352 15.2611 24.598 15.5597C23.8658 15.8532 23.02 16 22.0607 16Z"
+                        fill="white" />
+                    <path
+                        d="M31.3919 15.9696C30.892 15.9696 30.4628 15.7925 30.1043 15.4382C29.7508 15.0789 29.5741 14.6486 29.5741 14.1476C29.5741 13.6516 29.7508 13.2264 30.1043 12.8721C30.4628 12.5179 30.892 12.3407 31.3919 12.3407C31.8766 12.3407 32.3008 12.5179 32.6643 12.8721C33.0279 13.2264 33.2096 13.6516 33.2096 14.1476C33.2096 14.4816 33.1238 14.7878 32.9521 15.0662C32.7855 15.3395 32.5659 15.5597 32.2932 15.7267C32.0205 15.8887 31.7201 15.9696 31.3919 15.9696ZM31.3919 7.80077C30.892 7.80077 30.4628 7.62363 30.1043 7.26934C29.7508 6.91506 29.5741 6.48485 29.5741 5.97873C29.5741 5.48272 29.7508 5.06011 30.1043 4.71088C30.4628 4.3566 30.892 4.17945 31.3919 4.17945C31.8766 4.17945 32.3008 4.3566 32.6643 4.71088C33.0279 5.06011 33.2096 5.48272 33.2096 5.97873C33.2096 6.31783 33.1238 6.62657 32.9521 6.90493C32.7855 7.17824 32.5659 7.39588 32.2932 7.55784C32.0205 7.7198 31.7201 7.80077 31.3919 7.80077Z"
+                        fill="white" />
+                    <path
+                        d="M35.9193 15.7722V0.224085H42.0391C43.2156 0.224085 44.2179 0.449311 45.046 0.899762C45.8741 1.34515 46.5053 1.96515 46.9395 2.75977C47.3788 3.54933 47.5984 4.46035 47.5984 5.49285C47.5984 6.52534 47.3763 7.43637 46.9319 8.22592C46.4876 9.01547 45.8438 9.63042 45.0005 10.0707C44.1624 10.5111 43.1474 10.7312 41.9558 10.7312H38.0551V8.09686H41.4256C42.0568 8.09686 42.5769 7.98804 42.9859 7.77041C43.3999 7.54771 43.7079 7.24151 43.9099 6.85179C44.1169 6.45701 44.2204 6.00403 44.2204 5.49285C44.2204 4.9766 44.1169 4.52615 43.9099 4.14149C43.7079 3.75178 43.3999 3.45063 42.9859 3.23806C42.5718 3.02043 42.0467 2.91161 41.4104 2.91161H39.1988V15.7722H35.9193Z"
+                        fill="white" />
+                    <path
+                        d="M54.7824 16C53.5857 16 52.5557 15.7571 51.6922 15.2712C50.8338 14.7802 50.1724 14.0868 49.7078 13.191C49.2433 12.2901 49.011 11.2247 49.011 9.99483C49.011 8.79531 49.2433 7.74257 49.7078 6.83661C50.1724 5.93064 50.8263 5.2246 51.6695 4.71847C52.5178 4.21235 53.5125 3.95929 54.6537 3.95929C55.4212 3.95929 56.1357 4.08329 56.7971 4.33129C57.4636 4.57423 58.0443 4.94117 58.5392 5.43211C59.039 5.92305 59.4278 6.54052 59.7056 7.28453C59.9833 8.02347 60.1221 8.88894 60.1221 9.88095V10.7692H50.2986V8.76494H57.0849C57.0849 8.29931 56.984 7.88682 56.782 7.52747C56.58 7.16812 56.2998 6.88722 55.9413 6.68477C55.5878 6.47726 55.1763 6.3735 54.7067 6.3735C54.2169 6.3735 53.7827 6.48738 53.404 6.71514C53.0303 6.93783 52.7374 7.23898 52.5254 7.61857C52.3133 7.9931 52.2047 8.41066 52.1997 8.87123V10.7768C52.1997 11.3538 52.3057 11.8523 52.5178 12.2724C52.7349 12.6925 53.0404 13.0164 53.4342 13.2441C53.8281 13.4719 54.2952 13.5858 54.8355 13.5858C55.194 13.5858 55.5222 13.5352 55.8201 13.4339C56.118 13.3327 56.373 13.1809 56.5851 12.9784C56.7971 12.776 56.9587 12.528 57.0698 12.2344L60.054 12.4318C59.9025 13.1505 59.5919 13.7781 59.1224 14.3146C58.6578 14.846 58.0569 15.2611 57.3197 15.5597C56.5876 15.8532 55.7418 16 54.7824 16Z"
+                        fill="white" />
+                    <path
+                        d="M65.5452 15.9924C64.8029 15.9924 64.1414 15.8633 63.5607 15.6052C62.9801 15.342 62.5206 14.9549 62.1823 14.4437C61.849 13.9274 61.6824 13.2846 61.6824 12.5153C61.6824 11.8675 61.801 11.3234 62.0384 10.8831C62.2757 10.4427 62.5989 10.0885 63.0079 9.82021C63.4168 9.55197 63.8814 9.34952 64.4015 9.21286C64.9266 9.07621 65.477 8.98005 66.0526 8.92437C66.7292 8.85352 67.2746 8.78772 67.6886 8.72698C68.1027 8.66119 68.4031 8.56502 68.5899 8.43849C68.7767 8.31196 68.8702 8.1247 68.8702 7.87669V7.83114C68.8702 7.35032 68.7187 6.97832 68.4157 6.71514C68.1178 6.45195 67.6937 6.32036 67.1433 6.32036C66.5626 6.32036 66.1006 6.44942 65.7572 6.70755C65.4139 6.96061 65.1866 7.27947 65.0756 7.66412L62.0914 7.42118C62.2429 6.71261 62.5408 6.1002 62.9851 5.58395C63.4295 5.06264 64.0026 4.6628 64.7044 4.38443C65.4113 4.101 66.2293 3.95929 67.1584 3.95929C67.8047 3.95929 68.4233 4.03521 69.0141 4.18704C69.6099 4.33888 70.1376 4.57423 70.597 4.89309C71.0616 5.21195 71.4277 5.62191 71.6953 6.12297C71.9629 6.61897 72.0967 7.21367 72.0967 7.90706V15.7722H69.0368V14.1552H68.9459C68.7591 14.5196 68.5091 14.841 68.1961 15.1193C67.883 15.3926 67.5068 15.6078 67.0675 15.7647C66.6282 15.9165 66.1208 15.9924 65.5452 15.9924ZM66.4692 13.7604C66.9438 13.7604 67.3629 13.6668 67.7265 13.4795C68.09 13.2872 68.3753 13.029 68.5824 12.7051C68.7894 12.3812 68.8929 12.0143 68.8929 11.6043V10.3668C68.7919 10.4326 68.653 10.4934 68.4763 10.549C68.3046 10.5996 68.1102 10.6477 67.8931 10.6933C67.676 10.7338 67.4589 10.7717 67.2417 10.8072C67.0246 10.8375 66.8277 10.8654 66.651 10.8907C66.2723 10.9463 65.9415 11.0349 65.6588 11.1564C65.376 11.2779 65.1564 11.4423 64.9998 11.6499C64.8433 11.8523 64.765 12.1054 64.765 12.409C64.765 12.8494 64.9241 13.1859 65.2422 13.4188C65.5653 13.6465 65.9743 13.7604 66.4692 13.7604Z"
+                        fill="white" />
+                    <path
+                        d="M80.7879 4.11112V6.54052H73.7819V4.11112H80.7879ZM75.3725 1.31731H78.599V12.1889C78.599 12.4875 78.6445 12.7203 78.7354 12.8873C78.8262 13.0493 78.9525 13.1632 79.1141 13.229C79.2807 13.2948 79.4726 13.3277 79.6897 13.3277C79.8412 13.3277 79.9926 13.315 80.1441 13.2897C80.2956 13.2593 80.4118 13.2366 80.4925 13.2214L81 15.628C80.8384 15.6786 80.6112 15.7368 80.3183 15.8026C80.0255 15.8735 79.6695 15.9165 79.2504 15.9317C78.4728 15.962 77.7911 15.8583 77.2054 15.6204C76.6247 15.3825 76.1728 15.0131 75.8496 14.512C75.5265 14.0109 75.3674 13.3783 75.3725 12.614V1.31731Z"
+                        fill="white" />
+                    <path d="M0 0H1.7725V15.7759H0V0Z" fill="white" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M8.50121 2.91161H6.71177V0.224085H9.12986C10.3013 0.224085 11.3011 0.434127 12.1292 0.854211C12.9623 1.26923 13.596 1.85887 14.0303 2.62312C14.4696 3.3823 14.6892 4.27562 14.6892 5.30305C14.6892 6.33554 14.467 7.22379 14.0227 7.9678C13.5783 8.70674 12.9346 9.2736 12.0913 9.66838C12.0451 9.69015 11.9983 9.71132 11.951 9.7319L15.2421 15.7722H11.6217L8.68354 10.2605H6.71177V7.61857H8.51636C9.14248 7.61857 9.66256 7.53253 10.0766 7.36045C10.4907 7.18836 10.7987 6.93024 11.0006 6.58608C11.2077 6.24191 11.3112 5.81424 11.3112 5.30305C11.3112 4.7868 11.2077 4.35153 11.0006 3.99725C10.7987 3.64296 10.4881 3.37471 10.069 3.19251C9.65499 3.00524 9.13238 2.91161 8.50121 2.91161Z"
+                        fill="white" />
+                    <path d="M3.01003 0.224085V15.7722H5.7725V10.2605V7.61857V2.91161V0.224085H3.01003Z" fill="white" />
+                </svg>
+
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Study Smarter, Not Harder</h1>
+            <p>Re:Peat is a Chrome extension that transforms your browsing habits into effortless study and review.</p>
+            <a href="#pricing" class="cta-button">Get Premium Features</a>
+            <a href="https://chrome.google.com/webstore" target="_blank" class="cta-button secondary">Install For Free</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Use Re:Peat?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Spaced Repetition</h3>
+                    <p>Scientific algorithm that shows cards right when you're about to forget them, maximizing
+                        retention.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>New Tab Integration</h3>
+                    <p>Study effortlessly every time you open a new tab. Turn dead time into productive learning
+                        sessions and reduce the friction of opening a study app.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud Sync</h3>
+                    <p>Your flashcards sync across any device that uses your chrome account. Study on any computer,
+                        anywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔎</div>
+                    <h3>Deck Filtering</h3>
+                    <p>Easily search for and manage decks that you build for study.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Beautiful Interface</h3>
+                    <p>Clean, distraction-free design that helps you focus on what matters: learning.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Customizable</h3>
+                    <p>Organize your cards into decks, adjust quizzing frequency settings, and tailor the experience to
+                        your
+                        needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-price">$0<span class="period">/month</span></div>
+                    <ul class="plan-features">
+                        <li>5 flashcard decks</li>
+                        <li>50 cards per deck</li>
+                        <li>Basic spaced repetition</li>
+                        <li>Select 1 deck for random quizzing</li>
+                        <li>Cloud sync</li>
+                    </ul>
+                    <a href="https://chrome.google.com/webstore" class="cta-button">Install Free</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-price">$5<span class="period">/month</span></div>
+                    <ul class="plan-features">
+                        <li>Everything in the free plan</li>
+                        <li>10 flashcard decks</li>
+                        <li>1,000 cards per deck</li>
+                        <li>Select multiple decks for random quizzing</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="cta-button">Upgrade to Premium</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <h2 class="section-title">See Re:Peat in Action</h2>
+            <div class="screenshot-container">
+                <div class="screenshot-placeholder">
+                    📱 Extension Screenshots Coming Soon<br>
+                    <small>Beautiful, intuitive interface designed for focused learning</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Re:Peat</h2>
+            <div class="about-content">
+                <p>Re:Peat was created by a guy who wants to study more, without the friction of opening an app. We've
+                    all been there; you make your Anki(or any spaced-repetion service) decks, add a bunch of cards, and
+                    for the first few months or even years, you keep a consistent studying pace. But as time goes on,
+                    life gets busy and even opening an app to study becomes somewhat of a chore or forgotten habit.
+                </p>
+                <p>The goal of Re:Peat is to help turn casual habits, like opening new tabs, into learning sessions.
+                    It's been proven time and time again, that systems are more effective than motivation or discipline,
+                    and Re:Peat leverages this principle to create a seamless learning experience built on top of your
+                    web surfing.</p>
+                <p>Whether you're studying for exams, learning a new language, or mastering professional skills, Re:Peat
+                    transforms your browsing habits into a powerful learning companion.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="https://chrome.google.com/webstore" target="_blank">Chrome Web Store</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>
+                    <a href="./terms-of-service.html" target="_blank">Terms of Service</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="#about">About Us</a>
+                    <a href="mailto:repeatextension@gmail.com" id="contact-link">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Re:Peat. All rights reserved. | Turning web browsing into spaced
+                    repetition learning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(102, 126, 234, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Simple animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards and pricing cards
+        document.querySelectorAll('.feature-card, .pricing-card').forEach(el => {
+            el.style.transform = 'translateY(20px)';
+            el.style.opacity = '0';
+            el.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+
+    <script>
+        const contactLink = document.getElementById("contact-link");
+
+        contactLink.addEventListener("click", function (event) {
+            // Try to open mail client
+            const email = "repeatextension@gmail.com";
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(email).then(() => {
+                alert("Email copied to clipboard: " + email);
+            }).catch(err => {
+                console.error("Failed to copy email: ", err);
+            });
+
+            // Prevent the browser’s default navigation (so it won’t block the script)
+            event.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
