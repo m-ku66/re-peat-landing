@@ -94,13 +94,16 @@
     <h2>1. Information We Collect</h2>
 
     <h3>1.1 Data Collection Overview</h3>
-    <p>We collect the following types of information to improve user experience and maintain the quality of our product:
+    <p>We collect(or use) the following types of information to improve user experience and maintain the quality of our
+        product:
     </p>
     <ul>
-        <li><strong>User Identification Data:</strong> Unique user IDs generated for subscription management</li>
-        <li><strong>Flashcard Content:</strong> Your personal study materials, decks, and cards</li>
-        <li><strong>Subscription Status:</strong> Premium membership status and billing information</li>
-        <li><strong>Device Usage Data:</strong> Number of devices/browser instances using the same premium account</li>
+        <li><strong>User Identification Data:</strong> Unique user IDs generated for subscription management and email
+            addresses for account recovery and updates(collect)</li>
+        <li><strong>Flashcard Content:</strong> Your personal study materials, decks, and cards(use)</li>
+        <li><strong>Subscription Status:</strong> Premium membership status and billing information(collect)</li>
+        <li><strong>Device Usage Data:</strong> Number of devices/browser instances using the same premium
+            account(collect)</li>
     </ul>
 
     <p>All data collection is fundamental to the extension's main functions and is collected solely to deliver and
@@ -125,8 +128,13 @@
         <li>Device usage tracking for premium accounts</li>
     </ul>
 
+    <p>Stripe is the third-party service we use for payment processing. All payment information is handled securely by
+        Stripe and is subject to their privacy policy. Our usage of email addresses for account recovery and updates is
+        facilitated by extracting user email addresses from Stripe.</p>
+
     <p><strong>Important:</strong> We strongly recommend users follow Google Chrome's guidelines regarding sync data
-        management and account security.</p>
+        management and account security. Users who wish to know more about payment processing can refer to Stripe's
+        privacy policy. Here: <a href="https://stripe.com/privacy" target="_blank">https://stripe.com/privacy</a></p>
 
     <h2>3. How We Use Your Information</h2>
 
@@ -137,6 +145,7 @@
         <li>Synchronizing your study data across devices</li>
         <li>Managing subscription status and billing</li>
         <li>Preventing unauthorized premium access sharing</li>
+        <li>Communicating important updates and account-related information</li>
     </ul>
 
     <div class="important">
@@ -150,7 +159,7 @@
     <p>You have complete control over your data:</p>
     <ul>
         <li><strong>Extension Uninstall:</strong> Removing the extension will permanently delete all local flashcard
-            data and cannot be recovered</li>
+            data and cannot be recovered unless the extension is installed on another device and synced</li>
         <li><strong>Subscription Data:</strong> Your subscription status and user ID will remain in our system to honor
             any active premium benefits</li>
         <li><strong>Complete Deletion:</strong> You may request complete deletion of all data at any time by contacting
@@ -166,20 +175,19 @@
     <ul>
         <li>Remove premium features from your extension</li>
         <li>Retain your basic flashcard data (subject to Chrome sync limitations)</li>
-        <li>Maintain your user ID for potential future reactivation</li>
     </ul>
 
     <h2>5. Data Security</h2>
 
     <p>We implement appropriate technical and organizational security measures to protect your information against
-        unauthorized access, alteration, disclosure, or destruction. However, no internet-based service is 100% secure,
-        and we cannot guarantee absolute security.</p>
+        unauthorized access, alteration, disclosure, or destruction. It is our responsibility to ensure the security of
+        your data and properly handle cases of potential breaches with the utmost care.</p>
 
     <h2>6. Third-Party Services</h2>
 
     <p>We utilize the following third-party services:</p>
     <ul>
-        <li><strong>Google Chrome Sync:</strong> For flashcard data synchronization</li>
+        <li><strong>Google Chrome Sync API:</strong> For flashcard data synchronization</li>
         <li><strong>Stripe:</strong> For payment processing (subject to Stripe's privacy policy)</li>
         <li><strong>Upstash Redis:</strong> For subscription data storage</li>
     </ul>
