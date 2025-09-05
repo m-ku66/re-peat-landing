@@ -240,26 +240,158 @@
             border-bottom-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Screenshot Section */
-        .screenshots {
+        /* Gallery Section */
+        .gallery {
             padding: 5rem 0;
             background: #f8f9fa;
         }
 
-        .screenshot-container {
-            text-align: center;
+        .gallery-container {
             margin-top: 3rem;
         }
 
-        .screenshot-placeholder {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 4rem 2rem;
-            border-radius: 15px;
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
             margin: 0 auto;
-            max-width: 800px;
-            font-size: 1.2rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-item-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-item-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .gallery-loading {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-skeleton {
+            height: 250px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 2s infinite;
+            border-radius: 15px;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal styles for enlarged view */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .gallery-modal.active {
+            display: flex;
+        }
+
+        .gallery-modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .gallery-modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .gallery-modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
         }
 
         /* About Section */
@@ -377,6 +509,7 @@
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#about">About</a></li>
             </ul>
         </nav>
@@ -473,18 +606,30 @@
         </div>
     </section>
 
-    <!-- Screenshots Section -->
-    <section class="screenshots" id="screenshots">
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
         <div class="container">
             <h2 class="section-title">See Re:Peat in Action</h2>
-            <div class="screenshot-container">
-                <div class="screenshot-placeholder">
-                    📱 Extension Screenshots Coming Soon<br>
-                    <small>Beautiful, intuitive interface designed for focused learning</small>
+            <div class="gallery-container">
+                <div class="gallery-loading" id="gallery-loading">
+                    <div class="gallery-skeleton"></div>
+                    <div class="gallery-skeleton"></div>
+                    <div class="gallery-skeleton"></div>
+                </div>
+                <div class="gallery-grid" id="gallery-grid" style="display: none;">
+                    <!-- Images will be dynamically inserted here -->
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-modal" id="gallery-modal">
+        <div class="gallery-modal-content">
+            <button class="gallery-modal-close" id="modal-close">&times;</button>
+            <img id="modal-image" src="" alt="">
+        </div>
+    </div>
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -584,6 +729,127 @@
             el.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
             observer.observe(el);
         });
+
+        // Gallery Data - Replace these with your actual images
+        const galleryImages = [
+            {
+                src: 'media/cover.png',
+                alt: 'Cover Image',
+                title: 'Re:Peat Extension',
+                description: 'Turn your new tab into a powerful learning tool'
+            },
+            {
+                src: 'media/slide_1.png',
+                alt: 'Deck Selection',
+                title: 'Easy Deck Management',
+                description: 'Quickly create and organize your flashcards into decks'
+            },
+            {
+                src: 'media/slide_2.png',
+                alt: 'Display Frequency',
+                title: 'Control Card Frequency',
+                description: 'Set how often you want a new tab to trigger a quiz'
+            },
+            {
+                src: 'media/slide_3.png',
+                alt: 'Data Management',
+                title: 'Import and Export Data',
+                description: 'Keep your data safe with easy import/export options'
+            },
+            {
+                src: 'media/slide_4.png',
+                alt: 'Question Screenshot',
+                title: 'Clean Interface',
+                description: 'Enjoy our simple and distraction-free new tab design'
+            },
+            {
+                src: 'media/slide_5.png',
+                alt: 'Answer Screenshot',
+                title: 'Keyboard Shortcuts',
+                description: 'Quickly answer cards using intuitive keyboard shortcuts'
+            },
+        ];
+
+        // Gallery Functions
+        function createGalleryItem(imageData, index) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item fade-in';
+            galleryItem.style.animationDelay = `${index * 0.1}s`;
+
+            galleryItem.innerHTML = `
+                <img src="${imageData.src}" alt="${imageData.alt}" loading="lazy">
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">${imageData.title}</div>
+                    <div class="gallery-item-description">${imageData.description}</div>
+                </div>
+            `;
+
+            // Add click event for modal
+            galleryItem.addEventListener('click', () => openModal(imageData));
+
+            return galleryItem;
+        }
+
+        function renderGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            const galleryLoading = document.getElementById('gallery-loading');
+
+            // Clear existing content
+            galleryGrid.innerHTML = '';
+
+            // Create and append gallery items
+            galleryImages.forEach((imageData, index) => {
+                const galleryItem = createGalleryItem(imageData, index);
+                galleryGrid.appendChild(galleryItem);
+            });
+
+            // Show gallery and hide loading
+            setTimeout(() => {
+                galleryLoading.style.display = 'none';
+                galleryGrid.style.display = 'grid';
+            }, 1000); // Simulate loading time
+        }
+
+        // Modal Functions
+        function openModal(imageData) {
+            const modal = document.getElementById('gallery-modal');
+            const modalImage = document.getElementById('modal-image');
+
+            modalImage.src = imageData.src;
+            modalImage.alt = imageData.alt;
+            modal.classList.add('active');
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.remove('active');
+
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Modal Event Listeners
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        document.getElementById('gallery-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'gallery-modal') {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize gallery when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGallery();
+        });
     </script>
 
     <script>
@@ -600,7 +866,7 @@
                 console.error("Failed to copy email: ", err);
             });
 
-            // Prevent the browser’s default navigation (so it won’t block the script)
+            // Prevent the browser's default navigation (so it won't block the script)
             event.preventDefault();
         });
     </script>
