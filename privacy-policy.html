@@ -87,28 +87,41 @@
 
 <body>
     <h1>Privacy Policy</h1>
-    <p class="effective-date">Effective Date: August 17, 2025</p>
+    <p class="effective-date">Effective Date: September 19, 2025</p>
 
     <p>Re:Peat ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we
         collect, use, disclose, and safeguard your information when you use our Chrome extension service.</p>
 
     <h2>1. Information We Collect</h2>
 
-    <h3>1.1 Data Collection Overview</h3>
-    <p>We collect(or use) the following types of information to improve user experience and maintain the quality of our
-        product:
-    </p>
+    <h3>1.1 Account Registration Data</h3>
+    <p>When you first install Re:Peat, we automatically create a user account for you, which includes:</p>
     <ul>
-        <li><strong>User Identification Data:</strong> Unique user IDs generated for subscription management and email
-            addresses for account recovery and updates(collect)</li>
-        <li><strong>Flashcard Content:</strong> Your personal study materials, decks, and cards(use)</li>
-        <li><strong>Subscription Status:</strong> Premium membership status and billing information(collect)</li>
-        <li><strong>Device Usage Data:</strong> Number of devices/browser instances using the same premium
-            account(collect)</li>
+        <li><strong>Unique User ID:</strong> A randomly generated identifier used for account management and
+            subscription linking</li>
+        <li><strong>Account Creation Date:</strong> Timestamp of when your account was created</li>
+        <li><strong>Last Activity Date:</strong> When you last used the extension to track account activity</li>
+        <li><strong>Email Address:</strong> Collected during premium subscription purchases for account recovery and
+            important notifications</li>
     </ul>
 
-    <p>All data collection is fundamental to the extension's main functions and is collected solely to deliver and
-        improve our service.</p>
+    <h3>1.2 Study Content Data</h3>
+    <p>Your learning content, including:</p>
+    <ul>
+        <li><strong>Flashcard Content:</strong> Your personal study materials, decks, and cards</li>
+        <li><strong>Study Statistics:</strong> Progress tracking, deck counts, and learning analytics</li>
+        <li><strong>User Settings:</strong> Display preferences, quiz settings, and feature configurations</li>
+        <li><strong>Selected Deck Information:</strong> Currently active deck for study sessions</li>
+    </ul>
+
+    <h3>1.3 Subscription and Device Data</h3>
+    <p>For premium subscribers, we collect:</p>
+    <ul>
+        <li><strong>Subscription Status:</strong> Premium membership status and billing information</li>
+        <li><strong>Device Usage Data:</strong> Number of devices/browser instances using the same premium account</li>
+        <li><strong>Stripe Customer Information:</strong> Customer ID and subscription details for billing management
+        </li>
+    </ul>
 
     <div class="important">
         <strong>Device Monitoring:</strong> To prevent unauthorized sharing of premium features, we track the number of
@@ -117,36 +130,75 @@
 
     <h2>2. How We Store Your Information</h2>
 
-    <h3>2.1 Chrome Sync Storage</h3>
-    <p>Your flashcard content and personal study data are stored using Chrome's built-in sync functionality. This data
-        remains private to your Google account and follows Google Chrome's data synchronization guidelines.</p>
-
-    <h3>2.2 External Database Storage</h3>
-    <p>For transparency, we use Upstash Redis as our external database service to store:</p>
+    <h3>2.1 Cloud Storage System</h3>
+    <p>All user data is stored in our secure cloud infrastructure using Upstash Redis. This includes:</p>
     <ul>
-        <li>User ID to subscription mappings</li>
-        <li>Premium access verification data</li>
-        <li>Device usage tracking for premium accounts</li>
+        <li>Your complete user profile (account information, premium status, settings)</li>
+        <li>All flashcard content and study materials</li>
+        <li>Study progress and statistics</li>
+        <li>Device tracking information for premium accounts</li>
     </ul>
 
-    <p>Stripe is the third-party service we use for payment processing. All payment information is handled securely by
-        Stripe and is subject to their privacy policy. Our usage of email addresses for account recovery and updates is
-        facilitated by extracting user email addresses from Stripe.</p>
+    <h3>2.2 Unified Data Structure</h3>
+    <p>Your data is organized under a unified structure using your unique user ID as the primary identifier. This
+        ensures:</p>
+    <ul>
+        <li>Efficient data retrieval and storage</li>
+        <li>Seamless synchronization across devices</li>
+        <li>Consistent backup and recovery capabilities</li>
+        <li>Simplified account management</li>
+    </ul>
 
-    <p><strong>Important:</strong> We strongly recommend users follow Google Chrome's guidelines regarding sync data
-        management and account security. Users who wish to know more about payment processing can refer to Stripe's
-        privacy policy. Here: <a href="https://stripe.com/privacy" target="_blank">https://stripe.com/privacy</a></p>
+    <h3>2.3 Migration from Local Storage</h3>
+    <p>If you were using Re:Peat before our cloud migration, your existing Chrome sync data is automatically transferred
+        to our cloud storage system when you next use the extension. This ensures continuity of your study materials
+        without data loss.</p>
 
-    <h2>3. How We Use Your Information</h2>
+    <h2>3. Data Retention and Cleanup</h2>
 
-    <h3>3.1 Service Delivery Only</h3>
-    <p>We use your information exclusively for providing our spaced repetition learning service. Specifically:</p>
+    <h3>3.1 Account Inactivity Policy</h3>
+    <p>To maintain system efficiency and comply with data minimization principles, we implement automatic cleanup
+        policies based on account activity:</p>
+
+    <div class="important">
+        <strong>Free Users:</strong> Accounts inactive for 180 days (6 months) will be automatically deleted along with
+        all associated study data.
+    </div>
+
+    <div class="important">
+        <strong>Premium Users:</strong> Accounts inactive for 365 days (1 year) will be subject to deletion. Premium
+        users receive email warnings at 330 and 350 days of inactivity before any action is taken.
+    </div>
+
+    <div class="important">
+        <strong>Data Backup:</strong> We recommend that users regularly back up their data. Even if data is stored on
+        the cloud, having a back up guarantees you won't lose your study materials.
+    </div>
+
+    <h3>3.2 Email Notifications</h3>
+    <p>Premium subscribers will receive email notifications regarding account inactivity warnings. These emails serve
+        to:</p>
+    <ul>
+        <li>Alert you to potential account deletion</li>
+        <li>Provide instructions for maintaining account activity</li>
+        <li>Offer account recovery options</li>
+    </ul>
+
+    <h3>3.3 Data Recovery</h3>
+    <p>Once an account is deleted due to inactivity, data recovery is not possible. We recommend regular use of the
+        extension, backing up your data via the extension's data export functionality, and/or periodic login to maintain
+        account activity.</p>
+
+    <h2>4. How We Use Your Information</h2>
+
+    <h3>4.1 Service Delivery</h3>
+    <p>We use your information exclusively for providing our spaced repetition learning service:</p>
     <ul>
         <li>Enabling premium features for authenticated users</li>
         <li>Synchronizing your study data across devices</li>
         <li>Managing subscription status and billing</li>
         <li>Preventing unauthorized premium access sharing</li>
-        <li>Communicating important updates and account-related information</li>
+        <li>Sending account-related notifications and updates</li>
     </ul>
 
     <div class="important">
@@ -154,57 +206,77 @@
         study materials remain completely private and are only stored to deliver the service you've requested.
     </div>
 
-    <h2>4. Your Rights and Data Control</h2>
+    <h2>5. Your Rights and Data Control</h2>
 
-    <h3>4.1 Data Deletion</h3>
-    <p>You have complete control over your data:</p>
+    <h3>5.1 Data Persistence</h3>
+    <p>Your data is stored in our cloud infrastructure and persists across device changes:</p>
     <ul>
-        <li><strong>Extension Uninstall:</strong> Removing the extension will permanently delete all local flashcard
-            data and cannot be recovered unless the extension is installed on another device and synced</li>
-        <li><strong>Subscription Data:</strong> Your subscription status and user ID will remain in our system to honor
-            any active premium benefits</li>
-        <li><strong>Complete Deletion:</strong> You may request complete deletion of all data at any time by contacting
-            us</li>
+        <li><strong>Extension Uninstall:</strong> Removing the extension does NOT delete your cloud-stored data. Your
+            account and study materials remain accessible when you reinstall the extension</li>
+        <li><strong>Device Changes:</strong> Your data automatically syncs when you install Re:Peat on new devices</li>
+        <li><strong>Account Recovery:</strong> Premium users can recover access using their user ID across multiple
+            devices</li>
     </ul>
 
-    <h3>4.2 Legal Obligations</h3>
-    <p>Upon your request for data deletion, we are legally bound to remove all personal information from our systems
-        within 30 days, except where retention is required by law.</p>
+    <h3>5.2 Data Deletion Rights</h3>
+    <p>You may request complete deletion of all data at any time by contacting us. Upon request, we will:</p>
+    <ul>
+        <li>Delete all personal information from our cloud systems</li>
+        <li>Remove all study content and progress data</li>
+        <li>Cancel any active subscriptions</li>
+        <li>Confirm deletion completion within 30 days</li>
+    </ul>
 
-    <h3>4.3 Subscription Management</h3>
-    <p>You can cancel your subscription at any time. Cancellation will:</p>
+    <h3>5.3 Subscription Management</h3>
+    <p>You can cancel your premium subscription at any time. Cancellation will:</p>
     <ul>
         <li>Remove premium features from your extension</li>
-        <li>Retain your basic flashcard data (subject to Chrome sync limitations)</li>
+        <li>Preserve your study data in the cloud storage system</li>
+        <li>Maintain your account for potential future resubscription</li>
     </ul>
 
-    <h2>5. Data Security</h2>
+    <h2>6. Data Security</h2>
 
-    <p>We implement appropriate technical and organizational security measures to protect your information against
-        unauthorized access, alteration, disclosure, or destruction. It is our responsibility to ensure the security of
-        your data and properly handle cases of potential breaches with the utmost care.</p>
+    <p>We implement comprehensive security measures to protect your information:</p>
+    <ul>
+        <li>Encrypted data transmission and storage</li>
+        <li>Cryptographic signature validation for API requests</li>
+        <li>Secure authentication and authorization systems</li>
+        <li>Regular security audits and monitoring</li>
+        <li>Restricted access controls for system administrators</li>
+    </ul>
 
-    <h2>6. Third-Party Services</h2>
+    <h2>7. Third-Party Services</h2>
 
     <p>We utilize the following third-party services:</p>
     <ul>
-        <li><strong>Google Chrome Sync API:</strong> For flashcard data synchronization</li>
+        <li><strong>Upstash Redis:</strong> For secure cloud data storage and management</li>
         <li><strong>Stripe:</strong> For payment processing (subject to Stripe's privacy policy)</li>
-        <li><strong>Upstash Redis:</strong> For subscription data storage</li>
+        <li><strong>Resend:</strong> For sending account-related email notifications</li>
+        <li><strong>Netlify:</strong> For hosting our API infrastructure and scheduled functions</li>
     </ul>
 
-    <h2>7. Changes to This Privacy Policy</h2>
+    <p>Each third-party service is carefully selected for security and privacy compliance. Payment information is
+        handled exclusively by Stripe and never stored in our systems.</p>
 
-    <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy
-        Policy on this page and updating the "Effective Date" above.</p>
+    <h2>8. Changes to This Privacy Policy</h2>
 
-    <h2>8. Contact Information</h2>
+    <p>We may update this Privacy Policy to reflect changes in our practices or legal requirements. We will notify users
+        of material changes through:</p>
+    <ul>
+        <li>Extension notifications</li>
+        <li>Email notifications to premium subscribers</li>
+        <li>Updated effective date on this page</li>
+    </ul>
+
+    <h2>9. Contact Information</h2>
 
     <div class="contact-info">
-        <p>If you have any questions about this Privacy Policy or wish to exercise your data rights, please contact us
-            at:</p>
+        <p>If you have any questions about this Privacy Policy, wish to exercise your data rights, or need assistance
+            with your account, please contact us at:</p>
         <p><strong>Email:</strong> repeatextension@gmail.com</p>
         <p><strong>Subject Line:</strong> Privacy Policy Inquiry</p>
+        <p><strong>Response Time:</strong> We aim to respond within 48 hours</p>
     </div>
 
     <div class="footer">
